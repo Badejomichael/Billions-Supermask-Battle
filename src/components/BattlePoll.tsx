@@ -8,17 +8,22 @@ import ShareButton from './ShareButton';
 import DownloadButton from './DownloadButton';
 import Confetti from './Confetti';
 
-function pickPair(count: number, avoidPair?: [number, number]) {
-  if (count < 2) return [0, 1];
+function pickPair(count: number, avoidPair?: [number, number]): [number, number] {
+  if (count < 2) return [0, 1] as [number, number];
+
   let a = Math.floor(Math.random() * count);
   let b = Math.floor(Math.random() * count);
+
   while (b === a) b = Math.floor(Math.random() * count);
+
   // avoid repeating exact pair (optionally)
   if (avoidPair && a === avoidPair[0] && b === avoidPair[1]) {
     return pickPair(count, avoidPair);
   }
-  return [a, b];
+
+  return [a, b] as [number, number]; // ✅ force tuple
 }
+
 
 export default function BattlePoll() {
   const [pair, setPair] = useState<[number, number]>(() => pickPair(MASKS.length));
@@ -167,3 +172,4 @@ export default function BattlePoll() {
     </div>
   );
 }
+
